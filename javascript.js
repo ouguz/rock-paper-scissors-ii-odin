@@ -1,10 +1,7 @@
-//get a random number
 
 function randomNumber () {
     return Math.floor(Math.random()*3);
 }
-
-//match the random number with every possible option that computer's can get
 
 function getComputerChoice () {
     const getRandomNum = randomNumber();
@@ -20,14 +17,12 @@ function getComputerChoice () {
 
 // console.log(getComputerChoice());
 
-// get user's choice 
-
 function getUserChoice () {
     const getUserChoice = prompt("rock, paper or scissors?");
     return getUserChoice;
 }
 
-//declare score variables
+//final scores
 
 let humanScore = 0;
 let computerScore = 0;
@@ -39,7 +34,7 @@ let computerScore = 0;
 
 function winningDecider () {
 
-    const humanSelection = getUserChoice().toLowerCase();
+    
     const computerSelection = getComputerChoice();
 
     if ((humanSelection === "rock" && computerSelection === "scissors") 
@@ -47,6 +42,7 @@ function winningDecider () {
         || (humanSelection === "scissors" && computerSelection === "paper")) {
             console.log(`You win ${humanSelection} beats ${computerSelection}.`);
             humanScore++;
+            console.log(`human score: ${humanScore} and computer score: ${computerScore}`);
         } else if (humanSelection === computerSelection) {
             console.log(`draw`);
         } else if (humanSelection !== "rock" && humanSelection !== "paper" && humanSelection !== "scissors") {
@@ -54,6 +50,7 @@ function winningDecider () {
         } else {
             console.log(`You lose ${computerSelection} beats ${humanSelection}`);
             computerScore++;
+            console.log(`human score: ${humanScore} and computer score: ${computerScore}`);
         }
             
 }
@@ -64,14 +61,44 @@ function winningDecider () {
 //i'm gonna implement loops in the next chapter
 
 function playGame () {
-    winningDecider ();
-    winningDecider ();
-    winningDecider ();
-    winningDecider ();
-    winningDecider ();
+    while((humanScore < 5) && (computerScore < 5)) {
+        winningDecider();
+    }
     console.log(`Your score ${humanScore}`);
     console.log(`Computer score ${computerScore}`);
 
+}
+let humanSelection = "";
+let buttons = document.querySelector("#buttons");
+buttons.addEventListener("click", (e)=>{
+    switch(e.target.id){
+        case("rock"):
+        humanSelection = "rock";
+        if((humanScore < 5) && (computerScore < 5)){
+        winningDecider();
+        }
+        break;
+        case("paper"):
+        humanSelection = "paper";
+        if((humanScore < 5) && (computerScore < 5)){
+        winningDecider();
+        }
+        break;
+        case("scissors"):
+        humanSelection = "scissors";
+        if((humanScore < 5) && (computerScore < 5)){
+        winningDecider();
+        }
+        break;
+    }
+})
+
+let resetButton = document.querySelector("#reset");
+resetButton.addEventListener("click", resetBtn);
+
+function resetBtn(){
+    humanScore=0;
+    computerScore=0;
 }
 
 
