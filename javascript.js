@@ -15,26 +15,11 @@ function getComputerChoice () {
     }
 }
 
-// console.log(getComputerChoice());
-
-function getUserChoice () {
-    const getUserChoice = prompt("rock, paper or scissors?");
-    return getUserChoice;
-}
-
 //final scores
-
 let humanScore = 0;
 let computerScore = 0;
 
-
-// calculate who is winning the round
-
-
-
-function winningDecider () {
-
-    
+function rpsRound () {
     const computerSelection = getComputerChoice();
 
     if ((humanSelection === "rock" && computerSelection === "scissors") 
@@ -46,7 +31,7 @@ function winningDecider () {
         } else if (humanSelection === computerSelection) {
             console.log(`draw`);
         } else if (humanSelection !== "rock" && humanSelection !== "paper" && humanSelection !== "scissors") {
-            winningDecider();
+            rpsRound();
         } else {
             console.log(`You lose ${computerSelection} beats ${humanSelection}`);
             computerScore++;
@@ -55,43 +40,33 @@ function winningDecider () {
             
 }
 
-
-
-//make it 5 rounds
-//i'm gonna implement loops in the next chapter
-
-function playGame () {
-    while((humanScore < 5) && (computerScore < 5)) {
-        winningDecider();
-    }
-    console.log(`Your score ${humanScore}`);
-    console.log(`Computer score ${computerScore}`);
-
-}
 let humanSelection = "";
+let roundResult = document.querySelector("#roundResult");
 let buttons = document.querySelector("#buttons");
 buttons.addEventListener("click", (e)=>{
     switch(e.target.id){
         case("rock"):
         humanSelection = "rock";
-        if((humanScore < 5) && (computerScore < 5)){
-        winningDecider();
-        }
+        checkTheRound();
         break;
         case("paper"):
         humanSelection = "paper";
-        if((humanScore < 5) && (computerScore < 5)){
-        winningDecider();
-        }
+        checkTheRound();
         break;
         case("scissors"):
         humanSelection = "scissors";
-        if((humanScore < 5) && (computerScore < 5)){
-        winningDecider();
-        }
+        checkTheRound();
         break;
     }
-})
+});
+
+function checkTheRound () {
+    if((humanScore < 5) && (computerScore < 5)){
+        rpsRound();
+        roundResult.textContent = `human score:${humanScore} and computer score:${computerScore}`;
+        }
+        checkFinalResult();
+}
 
 let resetButton = document.querySelector("#reset");
 resetButton.addEventListener("click", resetBtn);
@@ -99,11 +74,16 @@ resetButton.addEventListener("click", resetBtn);
 function resetBtn(){
     humanScore=0;
     computerScore=0;
+    roundResult.textContent = "";
+    finalResult.textContent = "";
 }
 
+let finalResult = document.querySelector("#finalResult");
 
-//make a reset button
-function resetTheGame () {
-    humanScore = 0;
-    computerScore = 0;
+function checkFinalResult() {
+    if(computerScore === 5) {
+        finalResult.textContent = `Computer wins`;
+    } else if(humanScore === 5){
+        finalResult.textContent = `Player wins`;
+    }
 }
